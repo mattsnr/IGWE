@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; color: #1c1e21; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 2rem 0; }
+        .container { background-color: #fff; padding: 2rem 3rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; max-width: 600px; width: 90%; }
+        h1 { color: #1877f2; margin-bottom: 1rem; font-size: 1.8rem; }
+        .matchup { font-size: 1.5rem; font-weight: 600; margin-bottom: 2rem; }
+        .error-message { background-color: #fff0f0; border: 1px solid #ffd6d6; color: #d8000c; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; }
+        
+        .win-chance-container { display: flex; justify-content: space-around; align-items: center; margin-bottom: 2.5rem; background-color: #f0f2f5; padding: 1rem; border-radius: 8px; }
+        .win-chance { font-size: 1.1rem; font-weight: 600; }
+        .win-chance span { display: block; font-size: 0.8rem; color: #606770; font-weight: normal; margin-top: 4px; }
+        
+        .results-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem 0.5rem; margin-bottom: 2rem; }
+        .stat-label { font-weight: bold; color: #606770; grid-column: 2; }
+        .stat-value { font-size: 1.2rem; font-weight: 500; padding: 0.5rem; background-color: #f0f2f5; border-radius: 6px; }
+        .home-stat { text-align: right; }
+        .away-stat { text-align: left; }
+
+        .most-likely-score { margin-top: 2.5rem; text-align: center; background-color: #f0f2f5; padding: 1rem 1.5rem; border-radius: 8px; }
+        .most-likely-score h3 { margin-top: 0; color: #1c1e21; }
+        .most-likely-score p { font-size: 1.2rem; font-weight: 600; color: #050505; margin: 0.5rem 0 0 0;}
+        .most-likely-score span { font-size: 0.9rem; color: #606770; }
+
+
+        a { display: inline-block; margin-top: 1.5rem; background-color: #e4e6eb; color: #050505; text-decoration: none; padding: 0.7rem 1.5rem; border-radius: 6px; font-weight: bold; transition: background-color 0.2s; }
+        a:hover { background-color: #d8dadf; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction Results</h1>
+        <div class="matchup">
+            <span>{{ home_team }}</span> vs <span>{{ away_team }}</span>
+        </div>
+
+        {% if error %}
+            <div class="error-message">
+                <h3>⚠️ Prediction Unavailable</h3>
+                <p>{{ error }}</p>
+            </div>
+        {% else %}
+            <div class="win-chance-container">
+                <div class="win-chance">{{ predictions.home_win_pct }}%<span>{{ home_team }} Win</span></div>
+                <div class="win-chance">{{ predictions.draw_pct }}%<span>Draw</span></div>
+                <div class="win-chance">{{ predictions.away_win_pct }}%<span>{{ away_team }} Win</span></div>
+            </div>
+
+            <div class="results-grid">
+                <!-- Headers -->
+                <div class="home-stat" style="font-weight: bold;">{{ home_team }}</div>
+                <div></div>
+                <div class="away-stat" style="font-weight: bold;">{{ away_team }}</div>
+
+                <!-- Goals -->
+                <div class="stat-value home-stat">{{ predictions.home_goals }}</div>
+                <div class="stat-label">Expected Goals</div>
+                <div class="stat-value away-stat">{{ predictions.away_goals }}</div>
+
+                <!-- Shots -->
+                <div class="stat-value home-stat">{{ predictions.home_shots }}</div>
+                <div class="stat-label">Shots / Game</div>
+                <div class="stat-value away-stat">{{ predictions.away_shots }}</div>
+
+                <!-- Cards -->
+                <div class="stat-value home-stat">{{ predictions.home_cards }}</div>
+                <div class="stat-label">Cards / Game</div>
+                <div class="stat-value away-stat">{{ predictions.away_cards }}</div>
+            </div>
+
+            <div class="most-likely-score">
+                <h3>Most Likely Score</h3>
+                <p>{{ predictions.most_likely_score.score }} <span>({{ predictions.most_likely_score.prob_pct }})</span></p>
+            </div>
+        {% endif %}
+
+        <a href="/">Predict Another Match</a>
+    </div>
+</body>
+</html>

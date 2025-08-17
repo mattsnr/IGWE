@@ -1,0 +1,12 @@
+# Database file
+app/igwe_database.db
+
+# Model files
+app/*.pkl
+
+# Python cache
+__pycache__/
+app/__pycache__/
+
+# Virtual environment
+venv/

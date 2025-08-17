@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGWE Prediction</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; color: #1c1e21; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background-color: #fff; padding: 2rem 3rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; max-width: 500px; width: 90%; }
+        h1 { color: #1877f2; margin-bottom: 0.5rem; }
+        p { color: #606770; margin-bottom: 2rem; }
+        form { display: flex; flex-direction: column; gap: 1.5rem; }
+        .team-selector { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+        label { font-weight: 600; color: #333; }
+        select { width: 100%; padding: 0.8rem; border: 1px solid #dddfe2; border-radius: 6px; background-color: #f5f6f7; font-size: 1rem; cursor: pointer; }
+        select:focus { outline: none; border-color: #1877f2; box-shadow: 0 0 0 2px #e7f3ff; }
+        button { background-color: #1877f2; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
+        button:hover { background-color: #166fe5; }
+        .error { color: #fa383e; background-color: #ffebe_e; padding: 0.75rem; border-radius: 6px; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IGWE v1 Oracle</h1>
+        <p>Select two Premier League teams to get a prediction for their next match.</p>
+        <form action="/predict" method="post">
+            <div class="team-selector">
+                <label for="home_team">Home Team:</label>
+                <select name="home_team" id="home_team" required>
+                    {% for team in teams %}
+                    <option value="{{ team }}">{{ team }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="team-selector">
+                <label for="away_team">Away Team:</label>
+                <select name="away_team" id="away_team" required>
+                    {% for team in teams %}
+                    <option value="{{ team }}" {% if loop.index == 2 %}selected{% endif %}>{{ team }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit">Predict Match</button>
+        </form>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+"""
