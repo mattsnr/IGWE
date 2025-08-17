@@ -1,5 +1,8 @@
 IGWE: Football Predictor
-IGWE is a Python-based application that uses a machine learning model to predict the outcomes of English Premier League football matches. It fetches real-world match and team statistics, trains a predictive model, and presents the results through a simple web interface.
+
+
+IGWE is a Python-based application that uses a machine learning model to predict the outcomes of English Premier League football matches. It fetches real-world match and team'
+statistics, trains a predictive model, and presents the results through a simple web interface.
 
 This project is built with a hybrid data model, giving you the best of both worlds:
 
